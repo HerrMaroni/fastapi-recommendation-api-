@@ -8,21 +8,16 @@ from pydantic import BaseModel
 MODEL_PATH = './models/'
 app = FastAPI()
 
-origins = [
-    "https://localhost:7260",
-    "http://localhost:5000"
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 model = tf.saved_model.load(MODEL_PATH)
-ASOS_DB = pd.read_csv('../../data/ASOS/asos_products_colors_categ_upd_wo_other.csv').astype({"id": int, "title": str,
+ASOS_DB = pd.read_csv('./data/ASOS/asos_products_colors_categ_upd_wo_other.csv').astype({"id": int, "title": str,
       'image_url':str, 'type':str, 'brand':str, 'colour':str, 'gender':str, 'color_base':str, 'gen_category':str })
 
 BASIC_OUTFIT = {'tops', 'bottom', 'shoes'}
